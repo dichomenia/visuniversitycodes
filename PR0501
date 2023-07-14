@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int main()
+{
+    int num,i, num2;
+    int sum= 0;
+    double sq = 0, mean, mean2 = 0, sum2 = 0;
+
+
+    scanf("%d", &num);
+
+    int arrr[num];
+    float vin[num];
+
+     // loop to store numbers
+     for (i = 0; i < num; i++)
+     {
+         scanf("%d", &arrr[i]);
+     }
+
+    //loop to calculate mean
+    for (i = 0; i < num; i++)
+    {
+        sum = sum + arrr[i];
+    }
+    mean = (float)sum / num;
+
+
+    //loop to calculate something 3
+    for (i = 0; i < num; i++)
+    {
+
+        vin[i] = arrr[i] - mean;
+        vin[i] = vin[i] * vin[i];
+        sum2 = sum2 + vin[i];
+    }
+    mean2 = (float)sum2 / num;
+
+    sq= sqrt(mean2);
+
+    printf("%.4f", sq);
+
+    return 0;
+}

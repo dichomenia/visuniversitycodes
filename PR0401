@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int num, bal = 0, i, z = 0;
+
+
+    scanf("%d", &num);
+
+
+
+
+    while (num != 0)
+    {
+
+
+        if (num < 0)
+        {
+            if ((num *-1) > bal)
+            {
+                printf("%8d", z);
+                printf("%20d\n", bal);
+            }
+            else if ((num *-1) < bal)
+            {
+                bal = bal + num;
+                printf("%8d", (num*-1));
+                printf("%20d\n", bal);
+            }
+        }
+
+        else if (num > 0)
+        {
+            bal = bal + num;
+            printf("%16d", num);
+            printf("%12d\n", bal);
+        }
+        scanf("%d", &num);
+
+    }
+
+    return 0;
+}

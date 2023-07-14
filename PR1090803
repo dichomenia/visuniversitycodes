@@ -1,0 +1,81 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+
+using namespace std;
+
+int main()
+{
+    int matrix[10][10], row, columns;
+    int i, j;
+
+    //take the rows and columns
+    cin >> row >> columns;
+
+    //reading the elements
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < columns; j++)
+        {
+            cin >> matrix[i][j];
+        }
+    }
+
+    int r=0, c=0;
+
+    /*  r -         starting row index
+        c -         starting column index
+        row -       ending row index
+        column -    ending column index
+    */
+
+
+    while (r < row && c < columns)
+    {
+        /* Print the first row from the remaining rows */
+        for (i = c; i < columns; i++)
+        {
+            cout << matrix[r][i] << " ";
+        }
+        r++;
+
+        /* Print the last column from the remaining columns */
+        for (i = r; i < row; i++)
+        {
+            cout << matrix[i][columns - 1] << " ";
+        }
+        columns--;
+
+        /* Print the last row from the remaining rows */
+        if (r < row)
+        {
+            for (i = columns - 1; i >= c; i--)
+            {
+                cout << matrix[row - 1][i] << " ";
+            }
+            row--;
+        }
+
+        /* Print the first column from the remaining columns */
+        if (c < columns)
+        {
+            for (i = row - 1; i >= r; i--)
+            {
+                cout << matrix[i][c] << " ";
+            }
+            c++;
+        }
+    }
+    return 0;
+}
+
+/*
+Test case
+3 3
+1 2 3
+4 5 6
+7 8 9
+
+Output
+1 2 3 6 9 8 7 4 5
+*/

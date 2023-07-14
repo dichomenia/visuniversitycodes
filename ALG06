@@ -1,0 +1,91 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <queue>
+#define Inf 99999
+
+using namespace std;
+
+struct Edge
+{
+    int y;
+    int t;
+};
+
+vector<Edge> edges[1005];
+int distancee[1005];
+
+int main()
+{
+    int test_case;
+    int n,m;
+    cin >> test_case;
+
+    while(test_case)
+    {
+        cin >> n >> m;
+
+        for (int i = 0; i < n; i++)
+        {
+            edges[i].clear();
+            distancee[i] = Inf;
+        }
+
+        Edge e;
+        while(m--)
+        {
+            int x;
+            cin >> x >> e.y >> e.t;
+            edges[x].push_back(e);
+        }
+
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                for (int k = 0; k < edges[j].size(); k++)
+                {
+                    distancee[edges[j][k].y] = min(distancee[edges[j][k].y], distancee[j] + edges[j][k].t);
+                }
+            }
+        }
+
+        bool check = false;
+
+        for (int j = 0; j < n; ++j)
+        {
+            for (int k = 0; k < edges[j].size(); k++)
+            {
+
+                check = check | distancee[edges[j][k].y] > distancee[j] + edges[j][k].t;
+            }
+        }
+        if(check)
+        {
+            cout << "possible\n";
+        }
+        else
+        {
+            cout << "not possible\n";
+        }
+
+    test_case--;
+    }
+
+    return 0;
+}
+/*
+2
+3 3
+0 1 1000
+1 2 15
+2 1 -42
+4 4
+0 1 10
+1 2 20
+2 3 30
+3 0 -60
+
+possible
+not possible
+*/

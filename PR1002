@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int mark(int C[][5][5], int std, int num);
+
+int main()
+{
+    int students, i, j, k, x, std;
+    int teacherans[25];
+    scanf("%d", &students);
+    int numbers[students][5][5], points[students];
+    for (std = 0; std < students; std++)
+    {
+        for(i = 0; i < 5; i++)
+        {
+            for(j = 0; j < 5; j++)
+            {
+                scanf("%d", &numbers[std][i][j]);//input student's number
+            }
+        }
+    }
+    for(k = 0; k < 25; k++)
+    {
+        scanf("%d", &teacherans[k]);//input teacher's number
+    }
+    for (std = 0; std < students; std++)
+    {
+        i = 0;
+        while (mark(numbers, std, teacherans[i]) == 0)
+        {
+            i++;
+            points[std] = i + 1;//i is points that students get
+        }
+    }
+    for (k = 5; k <= 25; k++)
+    {
+        x = 0;//changing line when changing total points
+        for (std = 0; std < students; std++)
+        {
+            if (points[std] == k)
+            {
+                if (x == 0)
+                {
+                    printf("%d:", k);
+                }
+                printf(" %d", std + 1);
+                x++;
+            }
+        }
+        if (x > 0)
+        {
+            printf("\n");//if points changes then change a line
+        }
+    }
+    return 0;
+}
+
+int mark(int C[][5][5], int std, int num)
+{
+    int row, col, line = 0, i;
+    for (row = 0; row < 5; row++)
+    {
+        for (col = 0; col < 5; col++)
+        {
+            if (C[std][row][col] == num)
+            {
+                C[std][row][col] = 26;
+                break;
+            }
+        }
+        if (col < 5)
+            break;
+    }
+    for (i = 0; i < 5; i++)
+    {
+        if (C[std][row][i] != 26)
+            break;
+    }
+    if (i == 5)
+        line++;
+    for (i = 0; i < 5; i++)
+    {
+        if (C[std][i][col] != 26)
+            break;
+    }
+    if (i == 5)
+        line++;
+    for (i = 0; i < 5; i++)
+    {
+        if (C[std][i][i] != 26)
+            break;
+    }
+    if (i == 5)
+        line++;
+    for (i = 0; i < 5; i++)
+    {
+        if (C[std][i][4-i] != 26)
+            break;
+    }
+    if (i == 5)
+        line++;
+    return line;
+}

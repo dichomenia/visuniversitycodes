@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main()
+{
+    //printf("Hello world!\n");
+
+
+    int num, reverse = 0;
+
+    scanf("%d", &num);
+
+    while(num != 0)
+    {
+            reverse = reverse * 10;
+            reverse = reverse + num%10;
+            num = num/10;
+    }
+
+    printf("%04i", reverse);
+
+
+    return 0;
+}

@@ -1,0 +1,153 @@
+#include <iostream>
+#include <cstdio>
+#include <queue>
+#include <cstring>
+#include <vector>
+#define Inf 99999999
+
+using namespace std;
+
+vector<int> edges[50];
+
+double cost[50][50], distancee[50];
+int cap[50][50], nflow[50][50], pre[50];
+
+void initial(int S, int T, int N, int M)
+{
+    int i,j;
+    for ( i = S; i <= T; i++)
+        edges[i].clear();
+
+    memset(cap, 0, sizeof(cap));
+    memset(nflow, 0, sizeof(nflow));
+    memset(cost, 0, sizeof(cost));
+
+    for (i = 1; i <= N; i++)
+    {
+        cap[S][i] = 1;
+        edges[S].push_back(i);
+    }
+
+    for (i = N + 1; i <= N + M; i++)
+    {
+
+        cap[i][T] = 1;
+        edges[i].push_back(T);
+    }
+
+    for (i = 1; i <= N; i++)
+    {
+        for (j = N + 1; j <= N + M; j++)
+        {
+            cap[i][j] = j;
+            edges[i].push_back(j);
+            edges[j].push_back(i);
+        }
+    }
+}
+
+bool KM(int S, int T)
+{
+    fill(begin(distancee), end(distancee), Inf);
+    queue<int> q;
+    bool inQueue[50] = {0};
+
+    distancee[S] = 0;
+    q.push(S);
+
+    inQueue[S] = true;
+
+    while ( !q.empty() )
+    {
+        int cur = q.front();
+        inQueue[cur] = false;
+        q.pop();
+
+        for (int next : edges[cur])
+        {
+            if (nflow[next][cur] > 0 && distancee[cur] + (-cost[next][cur]) < distancee[next])
+            {
+                distancee[next] = distancee[cur] + (-cost[next][cur]);
+                pre[next] = cur;
+                if (!inQueue[next])
+                {
+                    inQueue[next] = true;
+                    q.push(next);
+                }
+            }
+
+            else if (cap[cur][next] > nflow[cur][next] && distancee[cur] + cost[cur][next] < distancee[next])
+            {
+                distancee[next] = distancee[cur] + cost[cur][next];
+                pre[next] = cur;
+                if (!inQueue[next])
+                {
+                    inQueue[next] = true;
+                    q.push(next);
+                }
+            }
+        }
+    }
+
+    if (distancee[T] == Inf)
+        return false;
+    else
+        return true;
+}
+
+
+double mcmf(int S, int T)
+{
+    double min_cost = 0;
+    while (KM(S, T))
+    {
+        int bottleneck = 1;
+        for (int i = T; i != S; i = pre[i])
+        {
+            nflow[pre[i]][i] += bottleneck;
+            nflow[i][pre[i]] -= bottleneck;
+        }
+        min_cost += distancee[T];
+    }
+    return min_cost;
+}
+
+int main()
+{
+    int n, m;
+    double time_travel;
+    while (true)
+    {
+        cin >> n >> m;
+        if (n == 0 && m == 0)
+            break;
+
+        int t = n + m + 1;
+        int s = 0;
+
+        initial(s, t, n, m);
+
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = n + 1; j <= n + m; j++)
+            {
+                scanf("%lf", &time_travel);
+                cost[i][j] = time_travel;
+            }
+        }
+
+        printf("%.2f\n", mcmf(s, t)/n+1e-6);
+    }
+
+    return 0;
+}
+
+/*
+3 4
+10.0 23.0 30.0 40.0
+5.0 20.0 10.0 60.0
+18.0 20.0 20.0 30.0
+0 0
+
+13.33
+*/

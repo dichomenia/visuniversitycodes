@@ -1,0 +1,124 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    //cout << "Hello world!" << endl;
+
+    int cases;
+    int maze_x, maze_y;
+    int x,y;
+    char direction;
+
+
+    //cout << "enter number if test cases"<< endl;
+    cin >> cases;                          
+
+    while(cases--)
+    {
+
+    //cout << "enter size of maze" <<endl;
+    cin>> maze_x >> maze_y;                 ///3,3
+    //cout << "enter starting point" << endl;
+    cin >> x >> y;                          ///1,1
+
+    x--;                                    ///0
+    y--;                                    ///0
+
+    string maze[maze_x][maze_y];
+
+    for (int i = 0; i < maze_x; i++)     ///creating empty array
+        for (int j = 0; j < maze_y; j++)
+            maze[i][j] = "";
+
+
+    /*for (int i = 0; i < maze_x; i++) 
+        for (int j = 0; j < maze_y; j++)
+            cout << maze[i][j];
+        cout << endl;*/
+
+    int temp = maze_x*maze_y-1;   ///temp assigned to 3*3..9-1 = 8;
+
+    int current_row = maze_x-x-1; ///3-1-1 = 1;
+    int current_col = y; ///1
+
+    int history[maze_x*maze_y-1][2];
+    ///used to store temp maze flip
+
+    int counter=0, flip;
+
+    while(temp--) ///temp is 8 at the first run
+    {
+        history[counter][0] = current_row;
+        history[counter][1] = current_col;///history[0][1] = 1;
+        counter++; /// 1
+
+        cin >> direction;
+        if(direction == 'U')
+        {
+            maze[current_row][current_col] += 'U'; ///maze[1][1] += 'U'
+            current_row--; ///0
+            maze[current_row][current_col] += 'D'; ///maze[0][1] += 'D'
+        }
+        else if(direction=='D')
+        {
+            maze[current_row][current_col] +='D';
+            current_row++;
+            maze[current_row][current_col]+='U';
+        }
+        else if(direction=='L')
+        {
+            maze[current_row][current_col] +='L';
+            current_col--;
+            maze[current_row][current_col]+='R';
+        }
+        else if(direction=='R')
+        {
+            maze[current_row][current_col] +='R';
+            current_col++;
+            maze[current_row][current_col]+='L';
+        }
+        else if(direction=='F')
+        {
+            cin>>flip;
+            current_row = history[counter-flip-1][0];
+            current_col = history[counter-flip-1][1];
+            counter -= flip;
+            temp++;
+        }
+    }
+
+    for (int i = 0; i < maze_y; i++)
+        cout << " _";
+    cout << endl;
+
+    for(int i = 0; i < maze_x; i++)
+    {
+        cout << "|";
+        for (int j=0; j < maze_y; j++)
+        {
+            bool bottom=false, right=false;
+            for(int k=0;k<maze[i][j].length();k++)
+            {
+                if(maze[i][j][k]=='D')
+                {
+                    bottom = true;
+                }
+                if(maze[i][j][k]=='R')
+                {
+                    right =true;
+                }
+            }
+            if(!bottom) {cout<<"_";}
+            else if(bottom){cout<<" ";}
+            if(!right) {cout<<"|";}
+            else if(right){cout<<" ";}
+        }
+    cout << endl;
+    }
+cout << endl;
+}
+
+    return 0;
+}

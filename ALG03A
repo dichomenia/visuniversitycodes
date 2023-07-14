@@ -1,0 +1,122 @@
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#define MAX 10000
+
+using namespace std;
+
+struct Point
+{
+    int x,y;
+    double getlength(const Point& a)
+    {
+        return sqrt((a.x - x) * (a.x - x) + (a.y - y) * (a.y - y));
+    }
+}point[MAX];
+
+
+
+double closest_pair(int left, int right, Point points[])
+{
+    double distance=0;
+    int mid=0;
+
+    if (left >= right)
+        return MAX;
+    else if(right - left < 3) //less than 3 points
+    {
+        distance = MAX;         ///diff
+        for(int i=left; i<right;i++)
+        {
+            for(int j=i+1;j<=right;j++)
+                distance = min(distance, points[i].getlength(points[j]));
+        }
+        //cout << distance << " hii" << endl;
+        return distance;
+    }
+
+    mid=(left + right)/2;
+
+    double shortest_dist = min(closest_pair(left, mid, points), closest_pair(mid + 1, right, points));  //cut it each time
+    if (shortest_dist == 0)
+        return 0;
+
+    int countt = 0;
+    Point midpoints[MAX];
+
+    for (int i = mid; i >= left && points[mid].x - points[i].x < shortest_dist; i--)
+    {
+        midpoints[countt] = points[i];
+        countt++;
+    }
+    for (int i = mid + 1; i <= right && points[i].x - points[mid].x < shortest_dist; i++)
+    {
+        midpoints[countt] = points[i];
+        countt++;
+    }
+
+    sort(midpoints, midpoints + countt, [](const Point &a, const Point &b) -> bool { return a.y < b.y; });
+
+
+    for (int i = 0; i < countt; i++)
+    {
+        for (int j = 1; j <= 3 && i + j < countt; j++)
+            shortest_dist = min(shortest_dist, midpoints[i].getlength(midpoints[i+j]));
+
+    }
+
+    return shortest_dist;
+
+
+}
+
+int main()
+{
+    int number_points;
+    double ans;
+
+    while(cin >> number_points && number_points)
+    {
+
+        struct Point coordinates[number_points];
+
+        for(int i=0;i<number_points;i++)
+        {
+            cin >> coordinates[i].x >> coordinates[i].y;
+        }
+
+        sort(coordinates, coordinates + number_points, [](const Point &a, const Point &b) -> bool { return a.x < b.x; });
+
+        ans = closest_pair(0,number_points-1,coordinates);
+
+        if (ans >= MAX)
+        {
+            cout << "INFINITY" << endl;
+        }
+        else
+        {
+            printf("%.4lf\n", ans);
+        }
+
+    }
+
+    return 0;
+}
+
+/*
+3
+0 0
+10000 10000
+20000 20000
+5
+0 2
+6 67
+43 71
+39 107
+189 140
+0
+
+INFINITY
+36.2215
+
+*/

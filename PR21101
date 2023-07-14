@@ -1,0 +1,199 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct person
+{
+    string name;
+    string gene;
+};
+
+string compare (string a, string b)
+{
+    string newGene;
+    if (a == "dominant")
+    {
+        if (b == "recessive")
+            newGene = "dominant";
+        else if (b == "non-existent")
+            newGene = "recessive";
+        else if( b == "dominant")
+            newGene = "dominant";
+        else
+            newGene = "";
+    }
+
+    else if (b == "dominant")
+    {
+        if (a == "recessive")
+            newGene = "dominant";
+        else if (a == "non-existent")
+            newGene = "recessive";
+        else if (a == "dominant")
+            newGene = "dominant";
+        else
+            newGene = "";
+    }
+
+    else if (a == "recessive")
+    {
+        if (b == "dominant")
+            newGene = "dominant";
+        else if (b == "non-existent")
+            newGene = "non-existent";
+        else if (b == "recessive")
+            newGene = "recessive";
+        else
+            newGene = "";
+    }
+
+    else if (b == "recessive")
+    {
+        if (a == "dominant")
+            newGene = "dominant";
+        else if (a == "non-existent")
+            newGene = "non-existent";
+        else if (a == "recessive")
+            newGene = "recessive";
+        else
+            newGene = "";
+    }
+
+    else if (a == "non-existent")
+    {
+        if (b == "dominant")
+            newGene = "recessive";
+        else if (b == "recessive")
+            newGene = "non-existent";
+        else if (b == "non-existent")
+            newGene = "non-existent";
+        else
+            newGene = "";
+    }
+
+    else if (b == "non-existent")
+    {
+        if (a == "dominant")
+            newGene = "recessive";
+        else if (a == "recessive")
+            newGene = "non-existent";
+        else if (a == "non-existent")
+            newGene = "non-existent";
+        else
+            newGene = "";
+    }
+    else
+        newGene = "";
+
+
+    return newGene;
+}
+
+int main()
+{
+    int n;
+    int i;
+    string name, second;
+
+    //cout << "Enter the number of people cases: "<< endl;
+    cin >> n;
+    person people[n];
+
+    /*
+    7
+    John dominant
+    Mary recessive
+    John Susan
+    Mary Susan
+    Peter non-existent
+    Susan Marta
+    Peter Marta
+    */
+    for(i=0;i<n;i++)
+    {
+
+        cin >> name >> second;
+        people[i].name = name;
+
+        if (second == "dominant" || second == "non-existent" || second == "recessive") //assigning genes to names
+        {
+            people[i].gene = second;
+        }
+        else
+        {
+            people[i].name = second;
+            people[i].gene = name;
+        }
+    }
+    /*
+    John dominant
+    Mary recessive
+    Susan John
+    Susan Mary
+    Peter non-existent
+    Marta Susan
+    Marta Peter
+    */
+
+    /*cout << endl;
+    for(i=0; i<n;i++)
+    {
+        cout << people[i].name << " " << people[i].gene << endl;
+    }*/
+
+    bool b = true;
+    while(b)
+    {
+        b = false;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (people[i].name == people[j].name)
+                {
+                    string tempGene[2];
+                    tempGene[0] = "";
+                    tempGene[1] = "";
+
+                    for (int k = 0; k < n; k++)
+                    {
+                        if (people[k].name == people[i].gene)
+                            tempGene[0] = people[k].gene;
+
+                        else if (people[k].name == people[j].gene)
+                            tempGene[1] = people[k].gene;
+
+                    }
+                    //cout << people[i].name << ", " << tempGene[0] << ", " << tempGene[1] << endl;
+                    string buf = compare(tempGene[0], tempGene[1]);
+                    if(buf != "")
+                    {
+                        b = true;
+                        people[i].gene = buf;
+                        people[j].name = "";
+                    }
+                }
+            }
+        }
+    }
+    int outCount = 0;
+    vector<string> output;
+    for (int i = 0; i < n; i++)
+    {
+        if ((people[i].gene == "dominant" || people[i].gene == "recessive" || people[i].gene == "non-existent") && people[i].name != "")
+        {
+            output.push_back(people[i].name + " " + people[i].gene);
+            outCount++;
+        }
+    }
+    sort(output.begin(), output.end());
+
+    for (int i = 0; i < outCount; i++)
+    {
+        cout << output[i] << endl;
+    }
+    return 0;
+}

@@ -1,0 +1,132 @@
+#include <bits/stdc++.h>
+#include<algorithm>
+#include <cmath>
+///	DP
+
+using namespace std;
+
+class dynamic_programming
+{
+public:
+    double shortest_path_sum(double** table,double** dp_array,int visited,int mask,int position,int num_node)
+    {
+  
+        if(mask == visited)
+        {
+            return table[position][0];
+        }
+
+        if(dp_array[mask][position] != -1)
+        {
+            return dp_array[mask][position];
+        }
+
+        double ans = INT_MAX;
+        for(int city=0;city<num_node;city++){
+
+		if((mask&(1<<city))==0){
+
+			double newAns = table[position][city] + shortest_path_sum(table,dp_array,visited,mask|(1<<city), city,num_node);
+			ans = min(ans, newAns);
+		}
+	}
+
+    dp_array[mask][position] = ans;
+	return dp_array[mask][position] = ans;
+    }
+};
+
+struct coordinates
+{
+    int x,y;
+};
+
+double dist(int x1, int y1, int x2, int y2)
+{
+    //return sqrt( ((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
+     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) * 1.0);
+}
+
+int main()
+{
+    const int num_node =20;
+
+    coordinates Coordinate[num_node];
+
+    double** table = new double*[num_node];
+    for(int i=0;i<num_node;i++)
+    {
+        table[i] = new double[num_node];
+        for(int j=0;j<num_node;j++)
+        {
+            table[i][j] = 0;
+        }
+    }
+
+    ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+
+    int n, x, y;
+
+    for (int i = 0; i < num_node; i++)
+    {
+        cin >> n >> x >> y;
+        Coordinate[i].x = x;
+        Coordinate[i].y = y;
+    }
+
+    for (int i = 0; i < num_node; i++)
+    {
+        for (int j = 0; j < num_node; j++)
+        {
+            if (i == j)
+            {
+                 table[i][j] = 0;
+            }
+            else
+            {
+                table[i][j] = dist(Coordinate[i].x, Coordinate[i].y, Coordinate[j].x, Coordinate[j].y);
+            }
+        }
+    }
+    ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    int visited = (1<<num_node)-1;
+    int m = 1<<num_node;
+    double** dp_array = new double*[m];
+    for(int i=0;i<m;i++)
+    {
+       dp_array[i] = new double[num_node];
+        for(int j=0;j<num_node;j++)
+        {
+            dp_array[i][j] = -1;
+        }
+    }
+    
+    dynamic_programming approach2;
+
+    cout << fixed << setprecision(3) << approach2.shortest_path_sum(table,dp_array,visited,1,0,num_node) << endl;
+  	return 0;
+}
+
+/*
+1 37 52
+2 49 49
+3 52 64
+4 20 26
+5 40 30
+6 21 47
+7 17 63
+8 31 62
+9 52 33
+10 51 21
+11 42 41
+12 31 32
+13 5 25
+14 12 42
+15 36 16
+16 52 41
+17 27 23
+18 17 33
+19 13 13
+20 57 58
+*/

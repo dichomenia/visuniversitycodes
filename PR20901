@@ -1,0 +1,55 @@
+#include <iostream>
+
+using namespace std;
+
+class RegularMember
+{
+public:
+    int getCoupon()
+    {
+        return coup;
+    }
+
+    float feedbackRate()
+    {
+        return percent;
+    }
+
+protected:
+    int coup = 100;
+    float percent = 1.2;
+
+};
+
+// Derived Class
+class GoldMember : public RegularMember //GoldMember class inheriting RegularMember class
+{
+public:
+
+    int getCoupon()
+    {
+        return coup*2;
+    }
+
+    float feedbackRate()
+    {
+        return percent*2;
+    }
+
+};
+
+int main()
+{
+    RegularMember test1;
+    GoldMember test2;
+
+    //cout << "The numbers for Regular Members are:" << endl;
+    //cout << test1.getCoupon()<< endl;
+    //cout << test1.feedbackRate()<< endl;
+    //cout << endl;
+    //cout << "The numbers for Gold Members are:" << endl;
+    //cout << test2.getCoupon()<< endl;
+    //cout << test2.feedbackRate()<< endl;
+
+    return 0;
+}

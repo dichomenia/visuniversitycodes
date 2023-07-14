@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int test,t=1;
+    int x,y;
+    char direction[100];
+    int i,j;
+    char grid[100][100];
+
+
+      for (i = 0; i < 32; i++)
+    {
+        for (j = 0; j < 32; j++)
+        {
+            grid[i][j] = '.';
+            //grid[2][31] = 'D';
+        }
+    }
+    //printf("Enter the number of test cases\n");
+    scanf("%d", &test);
+    while (test--)
+{
+for (i = 0; i < 32; i++)
+    {
+        for (j = 0; j < 32; j++)
+        {
+            grid[i][j] = '.';
+            //grid[2][31] = 'D';
+        }
+    }
+    //printf("Enter the starting point\n");
+    scanf("%d %d",&x,&y);
+    y = 31-y;
+    //printf("Enter the Direction\n");
+    scanf("%s", direction);
+    for (i = 0; direction[i]; i++)
+  {
+    if(direction[i] == 'E')
+    {
+        grid[x][y+1] = 'X';
+        x++;
+    }
+    else if(direction[i] == 'N')
+
+    {
+        grid[x][y] = 'X'; //grid[x+1][y] = 'X';
+        y--;
+    }
+    else if(direction[i] == 'W')
+    {
+        grid[x-1][y] = 'X'; //grid[x][y+1] = 'X'
+        x--;
+    }
+    else if(direction[i] == 'S')
+    {
+        grid[x-1][y+1] = 'X'; //grid[x-1][y] = 'X';
+        y++;
+    }
+  }
+  printf("Bitmap #%d\n", t);
+  for (i = 0; i < 32; i++)
+    {
+        for (j = 0; j < 32; j++)
+        {
+            printf("%c", grid[j][i]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    t++;
+}
+    return 0;
+}

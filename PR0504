@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+   char string[1000];
+   char search, replace[100];
+   int i;
+   int nstring=0;
+
+   gets(string);
+
+    //loop to find the end of the string
+    while(string[nstring]!= EOF)
+    {
+        if (string[nstring] == '.')
+        {
+            break;
+        }
+        nstring++;
+    }
+    //getting the letter to change in string and what to replace it with
+   scanf(" %c", &search);
+   scanf("%s", replace);
+
+   //loop to print each letter in the string one by one until it find the letter to replace then prints that then continue until finished
+   for (i = 0; i < nstring+1; i++)
+   {
+       if ( (string[i] == search) || (string[i] == search - 32) || (string[i] == search +32) )
+       {
+           printf("%s", replace);
+       }
+       else
+       {
+           printf("%c", string[i]);
+       }
+   }
+   return 0;
+}

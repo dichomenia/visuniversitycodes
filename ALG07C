@@ -1,0 +1,101 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int unreachable = -1;
+
+struct wires
+{
+    int s;
+    int e;
+    int w;
+
+    wires(){}
+
+    wires(int _s,int _e,int _w)
+    {
+        s = _s;
+        e = _e;
+        w = _w;
+    }
+};
+
+int main()
+{
+    int test_case;
+
+    while( scanf("%d", &test_case) != EOF )
+    {
+        int servers,cables,startt,endd;
+        for(int i=1;i<=test_case;i++)
+        {
+            cin >> servers >> cables >> startt >> endd;
+            /*if(startt>endd)
+                swap(startt,endd);*/
+
+            vector<int> shortestPath(servers, unreachable); //using struct for vectors
+            shortestPath[startt] = 0;
+            vector< vector<wires> > nodeEdges = vector< vector<wires> >(servers, vector<wires>());
+
+            queue<int> next;
+            vector<bool> inQueue(servers, false);
+
+            int head, tail, w;
+            for(int i=0;i<cables;i++)
+            {
+                cin >> head >> tail >> w;
+                nodeEdges[head].push_back( wires(head, tail, w) );
+                nodeEdges[tail].push_back( wires(tail, head, w) );
+            }
+
+            next.push(startt);
+
+            while( !next.empty() )
+            {
+                int cur = next.front();
+                next.pop();
+                inQueue[cur] = false;
+                //cout << nodeEdges[cur].size() << " -- " << endl;
+                for(int i=0 ;i<nodeEdges[cur].size();i++) // size or end point of the server
+                {
+                    int nextNode = nodeEdges[cur][i].e;
+                    if( shortestPath[nextNode] == unreachable || shortestPath[cur] + nodeEdges[cur][i].w < shortestPath[nextNode] )
+                    {
+                        shortestPath[nextNode] = shortestPath[cur] + nodeEdges[cur][i].w;
+                        if( !inQueue[nextNode] )
+                          next.push(nextNode);
+                          inQueue[nextNode] = true;
+                    }
+                }
+            }
+        
+            cout << "Case #" << i << ": ";
+            if( shortestPath[endd] == unreachable )
+                cout << "unreachable\n";
+            else
+                cout << shortestPath[endd] << endl;
+        }
+    }
+
+    return 0;
+}
+/*
+3
+
+2 1 0 1
+0 1 100
+
+3 3 2 0
+0 1 100
+0 2 200
+1 2 50
+
+2 0 0 1
+
+Case #1: 100
+Case #2: 150
+Case #3: unreachable
+*/

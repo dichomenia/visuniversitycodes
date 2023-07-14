@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    float v, distance;
+    int t0, t1;
+
+    scanf("%f", &v);
+    scanf("%d %d", &t1, &t0);
+
+    distance = (t0-t1) * v;
+
+    printf("%.2f", distance);
+
+    return 0;
+}

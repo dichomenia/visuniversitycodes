@@ -1,0 +1,15 @@
+char *trim(char *dest)
+{
+  int end;
+  end = strlen(dest) - 1;
+  //isspace meaning if there is \n \t or ' '
+  while(isspace(*(dest + end)))
+  {
+    end--;
+  }
+  while(isspace(*dest))
+  {
+    dest++;
+  }
+  return dest;
+}

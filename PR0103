@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int time;
+    int count30;
+    int fee;
+
+    scanf("%d", &time);
+    count30 = time / 30;
+    fee = 10 * count30;
+
+    printf("%d", fee);
+
+    return 0;
+}

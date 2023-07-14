@@ -1,0 +1,98 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//function used to calculate difference
+int getDiff(string a, string b)
+{
+    int countt = 0;
+
+    if (a.at(a.find("r") + 2) != b.at(b.find("r") + 2))
+    {
+        countt++;
+    }
+    if(a.at(a.find("o") + 2) != b.at(b.find("o") + 2))
+    {
+        countt++;
+    }
+    if(a.at(a.find("y") + 2) != b.at(b.find("y") + 2))
+    {
+        countt++;
+    }
+    if(a.at(a.find("g") + 2) != b.at(b.find("g") + 2))
+    {
+        countt++;
+    }
+    if(a.at(a.find("b") + 2) != b.at(b.find("b") + 2))
+    {
+        countt++;
+    }
+
+    return countt;
+}
+
+/*
+r/P,o/G,y/S,g/A,b/N
+r/G,o/P,y/S,g/A,b/N
+r/P,y/S,o/G,g/N,b/A
+r/P,o/S,y/A,g/G,b/N
+e
+r/G,o/P,y/S,g/A,b/N
+r/P,y/S,o/G,g/N,b/A
+r/P,o/S,y/A,g/G,b/N
+r/P,o/G,y/S,g/A,b/N
+ecclesiastical
+#
+*/
+
+int main()
+{
+    vector<string> city;
+    string input = "";
+
+    int i,j;
+
+    while(input != "#")
+    {
+
+    input = "";  //reset and clear vector for every test case
+    city.clear();
+
+    while(true)
+    {
+        cin >> input;
+        if(input.at(0) == 'e' || input == "#") //checks that current position is e or #
+        {
+            break;
+        }
+        city.push_back(input);
+    }
+
+    if(input == "#")
+    {
+        break;
+    }
+
+    int order = 0;
+    int diff = 0;
+    int totaldiff = 9999999;
+
+
+    for(i=0; i < city.size(); i++) //first line
+    {
+        diff = 0;
+        for (j=0; j < city.size();j++)  //second line
+        {
+            diff = diff + getDiff(city.at(i), city.at(j));
+        }
+        if (totaldiff > diff)
+        {
+            totaldiff = diff;
+            order = i + 1;
+        }
+    }
+    cout << order << endl;
+    }
+    return 0;
+}

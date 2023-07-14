@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+
+
+int main()
+{
+    int a=0,b=0,c=0;
+
+    cin>>a>>b>>c;
+
+    int absum = ((a*a)+(b*b));
+    int cpro = c*c;
+
+    if ( (a+b) <= c )
+    {
+        cout <<"can not construct"<<endl;
+    }
+
+    else if ( absum == cpro )
+    {
+        cout <<"right triangle"<<endl;
+    }
+
+    else if ( absum > cpro )
+    {
+        cout<<"acute triangle"<<endl;
+    }
+
+    else if ( absum < cpro )
+    {
+        cout<<"obtuse triangle"<<endl;
+    }
+    return 0;
+}

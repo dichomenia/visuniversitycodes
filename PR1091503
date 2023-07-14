@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  reverse();
+  return 0;
+}
+
+void reverse()
+{
+  char word;
+  scanf("%c",&word);
+
+  if(word!='\n')
+  {
+      reverse();
+      printf("%c",word);
+  }
+}

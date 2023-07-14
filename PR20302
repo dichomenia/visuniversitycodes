@@ -1,0 +1,26 @@
+Point *getIntersection(Line line) // 計算與另一條線的交點，如果只有一個交點就回傳該交點，其他狀況則回傳NULL
+  {
+    if (line.getA()-a==0)
+    {
+      return NULL;
+    }
+    else
+    {
+      Point *f=new Point();
+   
+      f->x=(-(line.getB()-b))/(line.getA()-a);
+      f->y=a*f->x+b;
+      return f;
+    }
+  }
+  bool onLine(Point p) //判斷點是否在線上，如果是回傳 true ，不是則回傳 false
+  {
+    if((a*p.x+b)==p.y)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }

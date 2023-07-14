@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+void rotate(int x[][50], int n)
+{
+    int y[50][50], i, j;
+    for(i = 0; i < n; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            y[j][n-i-1] = x[i][j];
+        }
+    }
+    for(i = 0; i < n; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            x[i][j] = y[i][j];
+        }
+    }
+}
+int main()
+{
+    int n;
+    while((cin >> n), n)
+    {
+        //cout << "hello world"<<endl;
+
+        map<string, int> r;
+        int m = 2*n, board[50][50] = {};
+        int x,y;
+        int flag = -1, move;
+        char cmd[50];   ///string to hold + -
+
+        for(int i=0; i < m; i++)
+        {
+            cin >> x >> y >> cmd;
+            if(flag != -1)  continue;
+            x--, y--;
+            if(cmd[0] == '+')
+            {
+                board[x][y] = 1;
+            }
+            else
+            {
+                board[x][y] = 0;
+            }
+            string s = "";
+
+            for(int j = 0; j < n; j++)
+            {
+                for(int k = 0; k < n; k++)
+                {
+                    s += (board[j][k]+'0'); ///store current board
+                    //cout << s<<endl;
+                }
+            }
+            if(r[s] == 1)
+            {
+                flag = i&1;
+                move = i;
+                continue;
+            }
+            for(int rr = 0; rr < 4; rr++) ///times we rotate board
+            {
+                string s = "";
+                for(int j = 0; j < n; j++)
+                {
+                    for(int k = 0; k < n; k++)
+                    {
+                        s += (board[j][k]+'0');
+                        //cout << s<<endl;
+                    }
+                }
+                r[s] = 1;
+                rotate(board, n);
+            }
+        }
+        if(flag == -1)
+        {
+            cout <<"Draw"<<endl;
+        }
+        else
+        {
+            cout << "Player " << !flag+1 << " wins on move " << move+1 << endl;
+        }
+    }
+    return 0;
+}
+
+/*
+2
+1 1 +
+2 2 +
+2 2 -
+1 2 +
+2
+1 1 +
+2 2 +
+1 2 +
+2 2 -
+0
+*/

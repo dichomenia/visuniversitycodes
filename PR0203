@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int a=0,b=0,c=0, absum = 0, cpro= 0;
+
+    scanf("%d %d %d", &a, &b, &c);
+
+    absum = ((a*a)+(b*b));
+    cpro = c*c;
+
+    if ( (a+b) <= c )
+    {
+        printf("can not construct");
+    }
+
+    else if ( absum == cpro )
+    {
+        printf("right triangle");
+    }
+
+    else if ( absum > cpro )
+    {
+        printf("acute triangle");
+    }
+
+    else if ( absum < cpro )
+    {
+        printf("obtuse triangle");
+    }
+
+    return 0;
+}

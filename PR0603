@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int matrix[10][10], row, columns;
+    int i, j;
+
+    //take the rows and columns
+    scanf("%d", &row);
+    scanf("%d", &columns);
+
+    //reading the elements
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < columns; j++)
+        {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    int r=0, c=0;
+
+    /*  r -         starting row index
+        c -         starting column index
+        row -       ending row index
+        column -    ending column index
+    */
+
+
+    while (r < row && c < columns)
+    {
+        /* Print the first row from the remaining rows */
+        for (i = c; i < columns; i++)
+        {
+            printf("%d ", matrix[r][i]);
+        }
+        r++;
+
+        /* Print the last column from the remaining columns */
+        for (i = r; i < row; i++)
+        {
+            printf("%d ", matrix[i][columns - 1]);
+        }
+        columns--;
+
+        /* Print the last row from the remaining rows */
+        if (r < row)
+        {
+            for (i = columns - 1; i >= c; i--)
+            {
+                printf("%d ", matrix[row - 1][i]);
+            }
+            row--;
+        }
+
+        /* Print the first column from the remaining columns */
+        if (c < columns)
+        {
+            for (i = row - 1; i >= r; i--)
+            {
+                printf("%d ", matrix[i][c]);
+            }
+            c++;
+        }
+    }
+    return 0;
+}

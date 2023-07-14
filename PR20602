@@ -1,0 +1,109 @@
+Point *Segment::getIntersection(Segment s)
+{
+  Point c = s.getPointA();
+    Point d = s.getPointB();
+    if  (   max(a.x,b.x) < min(c.x,d.x)
+         || max(c.x,d.x) < min(a.x,b.x)
+         || max(a.y,b.y) < min(c.y,d.y)
+         || max(c.y,d.y) < min(a.y,b.y)
+        )
+    {
+        return NULL;
+    }
+    else
+    {
+        float m1,n1,m2,n2,denominator_1,denominator_2 ;///Denominator
+        float y,x;
+        denominator_1 = (a.x - b.x);
+        denominator_2 = (c.x - d.x);
+        if(denominator_1 == 0)
+        {
+            x = a.x;
+        }
+        else
+        {
+            m1 = (a.y - b.y)/ (a.x - b.x);
+            n1 = a.y - m1*a.x;
+        }
+        /// line1 y = m1*x + n1
+
+        if(denominator_2 == 0)
+        {
+            x = c.x;
+        }
+        else
+        {
+            m2 = (d.y - c.y)/ (d.x - c.x);
+            n2 = c.y - m2*c.x;
+        }
+        /// line2 y = m2*x + n2
+
+        if(denominator_1 == 0 && denominator_2 ==0 )
+        {
+            if(a.y == c.y)
+                y = a.y;
+            else if(a.y == d.y)
+                y = a.y;
+            else if(b.y == c.y)
+                y = b.y;
+            else if(b.y == d.y)
+                y = b.y;
+            else
+                return NULL;
+        }
+        else if(denominator_1 == 0 && denominator_2 != 0)
+        {
+            y = m2*x + n2;
+        }
+        else if(denominator_1 != 0 && denominator_2 == 0)
+        {
+            y = m1*x + n1;
+        }
+        else if(denominator_1 != 0 && denominator_2 != 0)
+        {
+            x = (m1 - m2)/(n2 - n1);
+            y = m1*x + n1;
+        }
+
+        if(( x<a.x && x<b.x ) || ( x>a.x && x>b.x ) || ( y>a.y && y>b.y ) || ( y<a.y && y<b.y) )
+        {
+            return NULL;
+        }
+        Point *_P = new Point;
+        _P ->x = x;
+        _P ->y = y;
+        return _P;
+    }
+}
+Path::Path(Point p[], int n)
+{
+  int i, j = 0 ;
+    for(i = 0 ; i < n-1 ; i++)
+    {
+        seg[j] = Segment(p[i],p[i+1]);
+        j++;
+    }
+    count = j;
+}
+float Path::getLength()
+{
+  float L;
+    int i ;
+    for( i = 0 ; i < count ; i++)
+    {
+        L += seg[i].length();
+    }
+    return L;
+}
+void Path::operator+=(const Point &p)
+{
+  Segment Last(seg[count-1].getPointB(),p);
+    int i;
+    for(i = 0 ; i <count-1; i++)
+    {
+        if(Last.getIntersection(seg[i]) != NULL)
+            return;
+    }
+    seg[count] = Last;
+    count++; 
+}

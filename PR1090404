@@ -1,0 +1,41 @@
+#include <iostream>
+
+using namespace std;
+
+
+int main()
+{
+    int alcount=0, bobcount=0;
+    int i;
+
+    char alice,bob;
+
+    for(i=0;i<5;i++)
+    {
+        cin >> alice >> bob;
+        if( (alice == 'P' && bob == 'R') || (alice == 'S' && bob == 'P') || (alice == 'R' && bob == 'S') )
+        {
+            alcount++;
+        }
+        else if ( (bob == 'P' && alice == 'R') || (bob == 'S' && alice == 'P') || (bob == 'R' && alice == 'S') )
+        {
+            bobcount++;
+        }
+    }
+
+    //Paper beats rock. Scissor beats paper. Rock beats scissor.
+
+    if(alcount > bobcount)
+        {
+            cout << "Alice" <<endl;
+        }
+        else if(bobcount> alcount)
+        {
+            cout << "Bob" <<endl;
+        }
+        else
+        {
+            cout <<"Draw" <<endl;
+        }
+    return 0;
+}

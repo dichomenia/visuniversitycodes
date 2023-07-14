@@ -1,0 +1,19 @@
+#include <iostream>
+#include <iomanip>
+#include <stdio.h>
+#include <stdlib.h>
+
+using namespace std;
+
+int main()
+{
+
+   int n;
+
+   cin >> n;
+   // find the answer
+   int ans = n - (n % 2);
+   cout << ans;
+
+    return 0;
+}

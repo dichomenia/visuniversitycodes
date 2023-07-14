@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int distance=0, height,slide, day = 0, climb;
+
+    scanf("%d %d %d", &height, &climb, &slide);
+
+
+    if (climb <= slide && climb < height)
+        printf("-1");
+    else {
+        while (distance != height)
+        {
+
+            distance = distance + climb;
+            day = day + 1;
+
+            if (distance >= height)
+            {
+                printf("%d", day);
+                break;
+            }
+            else
+            {
+                distance = distance - slide;
+            }
+
+
+        }
+    }
+    return 0;
+}

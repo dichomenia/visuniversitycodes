@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main()
+{
+    //printf("Hello world!\n");
+
+
+    float time,dis;
+    float vel;
+
+    scanf("%f", &dis);
+    scanf("%f", &time);
+
+    vel = dis/time;
+
+    printf("%.6f", vel);
+
+
+    return 0;
+}

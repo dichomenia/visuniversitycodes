@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int a,b,i,j;
+    int max, max2, min, count;
+
+    while (scanf("%d %d", &a, &b) != EOF)
+    {
+        max = (a < b)?a:b;
+        min = (a > b)?a:b;
+
+        max2 = 0;
+
+        for (i = max; i <= min; i++)
+        {
+            j = i;
+            count = 1;
+
+            while (j > 1)
+            {
+                j = ( (j%2)?(j * 3 +1):(j/2) );
+                count++;
+            }
+            if (max2 < count)
+            {
+                max2 = count;
+            }
+        }
+        printf("%d %d %d\n", a, b, max2);
+    }
+    return 0;
+}

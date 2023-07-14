@@ -1,0 +1,117 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+int visited[100][100] = {0};
+int cnt=0;
+
+int dfs(int map[100][100],int row,int col,int i,int j)
+{
+
+    if (i>=row || i<0 || j>=col || j<0 ||visited[i][j] == 1 || map[i][j] ==0)
+    {
+        return 0;
+    }
+
+    cnt++;
+    visited[i][j]=1;
+    dfs(map,row,col,i+1,j); dfs(map,row,col,i-1,j);
+    dfs(map,row,col,i,j+1); dfs(map,row,col,i,j-1);
+
+    return cnt;
+}
+int solve(int map[100][100],int row,int col)
+{
+    int area=0;
+
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            //if(i<row || i>=0 || j<col || j>=0 || !visited[i][j] || map[i][j])
+            cnt =0;
+            if(map[i][j] == 1)
+            {
+                area = max( area, dfs(map,row,col,i,j) );
+            }
+        }
+    }
+    return area;
+
+}
+
+int main()
+{
+    string input;
+    int rowC=0, colC=0;
+
+    getline(cin, input);
+
+    for(int i=0;i<input.length();i++)
+    {
+        if(input[i]=='[')
+        {
+            if(rowC==0)                 ///stores 4
+            {
+                rowC=input[i+1]-'0';
+                continue;
+            }
+            if(colC==0)                 ///stores 5
+            {
+                colC=input[i+1]-'0';
+                break;
+            }
+        }
+    }
+    //cout << rowC << " " << colC << endl;
+
+    int row=0,col=0;
+    int map[100][100];
+
+    for(int i=0;i<rowC+1;i++)
+    {
+        getline(cin, input);
+
+        for(int j=0;j<input.length();j++)
+        {
+            if(input[j]=='0' || input[j]=='1')
+            {
+                map[row][col] = input[j]-'0';
+                col++;
+            }
+        }
+        row++;
+        col=0;
+    }
+
+    /*for(int i=0;i<rowC;i++)
+    {
+        for(int j=0;j<colC;j++)
+        {
+                cout << map[i][j] << " ";
+                col++;
+        }
+        cout << endl;
+    }*/
+
+    int ans=0;
+
+    ans = solve(map,rowC,colC);
+
+    printf("%d\n", ans);
+
+    return 0;
+}
+
+/*
+
+map[4][5] = {
+0,1,1,0,0,
+1,1,0,1,1,
+0,0,1,0,0,
+0,0,1,1,0
+};
+
+*/

@@ -1,0 +1,19 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include<math.h>
+
+using namespace std;
+
+
+int main()
+{
+
+    float sq,num;
+	cin>>num;
+    sq=sqrt(num);
+  
+	printf("%.4f", sq);
+
+    return 0;
+}

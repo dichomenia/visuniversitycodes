@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+int recursive(int n, int count);
+
+
+int main()
+{
+    int num, num2, i, ans, count;
+    while(scanf("%d%d", &num, &num2) != EOF)
+    {
+        ans = 0;
+        int min = (num < num2) ? num : num2;
+        int max = (num < num2) ? num2 : num;
+        for(i = min; i <= max; i++)
+        {
+            count = recursive(i, 1);
+            if(ans < count)
+            {
+                ans = count;
+            }
+        }
+        printf("%d %d %d\n", num, num2, ans);
+    }
+    return 0;
+}
+int recursive(int n, int count)
+{
+    if(n == 1)
+    {
+        return count;
+    }
+    else
+    {
+        n = (n % 2) ? (n * 3 + 1) : (n / 2);
+        count++;
+    }
+    recursive(n, count);
+}

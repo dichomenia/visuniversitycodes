@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+int n, LIS_max, LDS_max;
+int num[10001];
+int LIS[10001];
+int lis[10001];
+int LDS[10001];
+int lds[10001];
+
+void LIS_function(int i)
+{
+    int j=0;
+    while (num[i]>LIS[j] && j<LIS_max)
+        j++;
+    if (j == LIS_max)
+        LIS[LIS_max++]=num[i];
+    else if (num[i] < LIS[j])
+        LIS[j]=num[i];
+    lis[i]=j;
+}
+
+void LDS_function(int i)
+{
+    int j=0;
+    while (num[i]>LDS[j] && j<LDS_max)
+        j++;
+    if (j == LDS_max)
+        LDS[LDS_max++]=num[i];
+    else if (num[i] < LDS[j])
+        LDS[j]=num[i];
+    lds[i]=j;
+}
+
+int main()
+{
+    while (cin >> n)
+    {
+        LIS_max=0, LDS_max=0;
+        int i, j;
+        for (i=0; i<n; i++)
+        {
+            cin >> num[i];
+        }
+
+        for (i=0, j=n-1; i<n; i++, j--)
+        {
+            LIS_function(i);
+            LDS_function(j);
+        }
+
+        int max=0;
+        for (i=0; i<n; i++)
+        {
+            if (min(lis[i], lds[i]) > max)
+            {
+                max=min(lis[i], lds[i]);
+            }
+        }
+        cout << max*2+1 << endl;
+    }
+}
+/*
+10
+1 2 3 4 5 4 3 2 1 10
+19
+1 2 3 2 1 2 3 4 3 2 1 5 4 1 2 3 2 2 1
+5
+1 2 3 4 5
+9
+9
+1
+*/

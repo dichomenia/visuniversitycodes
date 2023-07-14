@@ -1,0 +1,30 @@
+#include <iostream>
+
+using namespace std;
+
+
+int main()
+{
+
+    int a,b,c,d,t;
+
+    cin >> a >> b >> c >> d;
+
+    if (a>b)
+    {
+        t=a, a=b, b=t;
+    }
+    if (c>d)
+    {
+        t=c, c=d, d=t;
+    }
+    if((b<=c) || (d<=a))
+    {
+        cout <<"no overlay";
+    }
+    else
+    {
+        cout << "overlay";
+    }
+    return 0;
+}

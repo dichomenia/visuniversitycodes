@@ -1,0 +1,14 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    float vel,km,t;
+
+    cin >>km>>t;    //read distance and time
+    //cin >> t;
+    vel = km/t;     //calculate velocity
+    cout << vel;    //output
+    return 0;
+}

@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    //int km, t;
+    float vel, km, t;
+
+    scanf("%f %f", &km, &t);
+    vel = km/t;
+    printf("%.6f", vel);
+    return 0;
+}

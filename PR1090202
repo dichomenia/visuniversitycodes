@@ -1,0 +1,12 @@
+int between(int *a, int *b)
+{
+  int sum= 0;
+  int i=0;
+  
+  while((a+i) < b)
+  {
+    sum += *(a+i);
+    i++;
+  }
+  return sum;
+}

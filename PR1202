@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//Week 12 question 2
+
+int steps(int a, int b, int c, int d);
+
+int main()
+{
+    int num, x, y, x2, y2, total = 0, i;
+
+    scanf("%d", &num); //get the number of test cases
+
+    for(i = 1; i <= num; i++)
+    {
+        scanf("%d %d %d %d", &x, &y, &x2, &y2);
+
+        total = steps(x, y, x2, y2) + x2;
+
+        printf("Case %d: %d\n", i, total);
+    }
+    return 0;
+}
+
+int steps(int a, int b, int c, int d) //function to determine how much spaces passes
+{
+    int totall = 0, total2 = 0, i, j;
+
+    for(i = 0; i <= a + b; i++)
+    {
+        totall = totall + i;
+    }
+    totall = totall + a;
+    for(j = 0; j <= c + d; j++)
+    {
+        total2 = total2 + j;
+    }
+    return (total2 - totall);
+}

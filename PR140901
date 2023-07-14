@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int recursive_palindrome(char string[], char string2[], int length);
+
+char test[10000], test2[10000];
+int string_length;
+int j,k=0, isPalindrome = 0;
+
+int main()
+{
+    scanf("%s", test);
+    string_length = strlen(test);
+
+    /*for(i= string_length - 1; i >= 0; i--)
+    {
+        printf("%c", test[i]);
+    }*/
+
+    // storing character array in reverse
+    for(j= string_length - 1; j >= 0; j--)
+    {
+        test2[j]=test[k];
+        k++;
+    }
+    isPalindrome = recursive_palindrome(test, test2, string_length);
+
+    if(isPalindrome == 1)
+    {
+        printf("%s is a palindrome.\n", test);
+    }
+    else if (isPalindrome == 0)
+    {
+        printf("%s is not a palindrome.\n", test);
+    }
+    return 0;
+}
+int recursive_palindrome(char string[], char string2[], int length)
+{
+    int i, flag;
+
+    for (i=0; i<length; i++)   //loop to test for palindrome
+    {
+        if ( (string[i] == string2[i]) || (string[i] == (string2[i] - 32)) || (string[i] == (string2[i] + 32)) ) //testing if lower case equal upper case and vise versa
+        {
+            flag = 1;
+        }
+        else
+        {
+            return 0;
+            break;
+        }
+    }
+    if (flag == 1)
+    {
+        return 1;
+    }
+    recursive_palindrome(string, string2, length);
+}

@@ -1,0 +1,35 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+
+using namespace std;
+
+int main()
+{
+    int num,i,j,count = 0, ni,pi,nip;
+    cin >> num;
+    for(i=2;i+i<=num;i++)
+    {
+        ni = num - i;
+        pi = 1;
+        for(j=2;pi && j*j<=i;j++)
+        {
+            if(i%j==0)
+                pi=0;
+        }
+        nip=1;
+        for (j=2;nip && j*j<= ni; j++)
+        {
+            if (ni % j ==0)
+                nip = 0;
+        }
+        if (pi && nip) //both numbers are the same
+            count++;
+    }
+    cout << count;
+    return 0;
+}
+///Test case
+///1234
+///Output
+///25

@@ -1,0 +1,111 @@
+#include <iostream>
+#include <string.h>
+#include <stdio.h>
+
+using namespace std;
+
+char cube[16][16][16];
+
+void getXYZ(int N, int kind, int x, int y, int d, int &rx, int &ry, int &rz)
+{
+    switch(kind)
+    {
+        case 0:
+            rx = y, ry = d, rz = N - x - 1;
+            break;
+        case 1:
+            rx = d, ry = N - y - 1, rz = N - x - 1;
+            break;
+        case 2:
+            rx = N - y - 1, ry = N - d - 1, rz = N - x - 1;
+            break;
+        case 3:
+            rx = N - d - 1, ry = y, rz = N - x - 1;
+            break;
+        case 4:
+            rx = y, ry = N - x - 1, rz = N - d - 1;
+            break;
+        case 5:
+            rx = y, ry = x, rz = d;
+            break;
+    }
+} //match coordinates
+
+int main()
+{
+    char seen[6][16][16];
+    int N;
+  
+    while(scanf("%d", &N) == 1 && N )  ///scans as long as not 0
+    {
+        int x,y,z;
+        for(int i = 0; i < N; i++)
+        {
+            for(int j = 0; j < 6; j++)
+            {
+                cin >> seen[j][i]; ///scan N * row
+            }
+        }
+    memset(cube, 'O', sizeof(cube)); ///setting cube to O
+    for(int k = 0; k < 6; k++)
+        {
+            for(int i = 0; i < N; i++)
+            {
+                for(int j = 0; j < N; j++)
+                {
+                    if(seen[k][i][j] != '.')
+                        continue;
+                    for(int d = 0; d < N; d++)
+                    {
+                        getXYZ(N, k, i, j, d, x, y, z);
+                        cube[x][y][z] = '.'; //gets the X, Y, Z as long as D is not equal to N-1
+                    }
+                }
+            }
+        }
+        bool update = false;
+        do
+        {
+            update = false;
+            for(int k = 0; k < 6; k++)
+            {
+                for(int i = 0; i < N; i++)
+                {
+                    for(int j = 0; j < N; j++)
+                    {
+                        if(seen[k][i][j] == '.')
+                            continue;
+                        for(int d = 0; d < N; d++)
+                        {
+                            getXYZ(N, k, i, j, d, x, y, z);
+                            if(cube[x][y][z] == '.')
+                                continue;
+                            if(cube[x][y][z] == 'O')
+                            {
+                                cube[x][y][z] = seen[k][i][j];
+                                update = true;
+                                break;
+                            } else if(cube[x][y][z] == seen[k][i][j])
+                            {
+                                break;
+                            } else
+                            {
+                                cube[x][y][z] = '.';
+                                update = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        while(update == true); //checking both are true
+
+        int rekt = 0;
+        for(int i = 0; i < N; i++)
+            for(int j = 0; j < N; j++)
+                for(int k = 0; k < N; k++)
+                    rekt += cube[i][j][k] != '.';
+        printf("Maximum weight: %d gram(s)\n", rekt);
+    }
+    return 0;
+}

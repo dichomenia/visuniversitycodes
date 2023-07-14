@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+void a(char *str, int idx);
+void b(char *str, int idx);
+void c(char *str, int idx);
+
+int main()
+{
+    int n, i, j;
+    char S[1001];
+    scanf("%d", &n);
+    for (i = 0; i < n; i++)
+    {
+        scanf(" %s", S);
+        for (j = 0; S[j] != '\0'; j++)
+        {
+            switch(S[j])
+            {
+            case 'a':
+                a(S, j);
+                break;
+            case 'b':
+                b(S, j);
+                break;
+            case 'c':
+                c(S, j);
+                break;
+            }
+        }
+        printf("%s\n", S);
+    }
+    return 0;
+}
+
+void a(char *str, int idx)
+{
+    int k, c;
+    c = (strlen(str)-idx)/2;
+    for(k = 0; k < c; k++)
+    {
+        char ch;
+        ch = str[idx+k+1];
+        str[idx+k+1] = str[strlen(str)-1-k];
+        str[strlen(str)-1-k] = ch;
+    }
+}
+
+void b(char *str, int idx)
+{
+    char temp[1000];
+    strcpy(temp, str+idx+1);
+    strcat(str, temp);
+}
+
+void c(char *str, int idx)
+{
+    char temp[1000];
+    strcpy(temp, str+idx+3);
+    strcpy(str+idx+1, temp);
+}

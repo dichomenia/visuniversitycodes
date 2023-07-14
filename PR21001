@@ -1,0 +1,49 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    //cout << "Hello world!" << endl;
+    int i, amp, k , j, freq;
+    int cases;
+
+    //cout << "Enter the number of test cases" << endl;
+    cin >> cases;
+
+    while (cases>0)
+    {
+        //cout << "Enter the amplitude" << endl;
+        //cout << "Enter the frequency" << endl;
+        cin >> amp;
+        cin >> freq;
+        for (j = 1; j<=freq; j++) //frequency loop
+        {
+            for (i = 1; i<=amp; i++) //printing wave
+            {
+                k=i;
+                while (k>0)
+                {
+                    cout << i;
+                    k--;
+                }
+                cout << endl;
+            //cout << i << endl;
+            }
+            for (i = amp-1; i > 0; i--)
+            {
+                k=i;
+                while (k>0)
+                {
+                    cout << i;
+                    k--;
+                }
+                cout << endl;
+            //cout << i << endl;
+            }
+            cout << endl;
+        }
+        cases--;
+    }
+    return 0;
+}

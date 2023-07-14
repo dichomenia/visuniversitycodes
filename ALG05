@@ -1,0 +1,86 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int knapsack(int current_weight, int weight_array[], int price_array[], int nitems)
+{
+    int table[nitems+1][current_weight+1];
+
+    for(int i=0;i<=nitems;i++)
+    {
+        for(int j=0;j<=current_weight;j++)
+        {
+            if(i==0||j==0)
+            {
+                table[i][j] = 0;    //no item is included weight and or capacity is 0
+            }
+            else if(weight_array[i - 1] <= j)
+            {                     //
+                table[i][j] = max(table[i - 1][j - weight_array[i - 1]] + price_array[i - 1], table[i - 1][j]);
+            }
+            else
+                table[i][j] = table[i-1][j];
+        }
+    }
+    return table[nitems][current_weight];   //last position in the table
+}
+
+int main()
+{
+    int test_case,items;
+    int price[1000],weight[1000];
+    int people, max_weight;
+    int result;
+ 
+    cin >> test_case;
+
+    while(test_case--)
+{
+ 	 result=0;
+    cin >> items;
+
+    for(int i=0;i<items;i++)
+    {
+        cin >> price[i] >> weight[i];
+    }
+    cin >> people;
+
+    for(int i=0;i<people;i++)
+    {
+        cin >> max_weight;
+        result += knapsack(max_weight, weight, price, items);
+
+    }
+    cout << result << endl;
+}
+    return 0;
+}
+
+/*
+Input
+2
+3
+72 17
+44 23
+31 24
+1
+26
+6
+64 26
+85 22
+52 4
+99 18
+39 13
+54 9
+4
+23
+20
+20
+26
+
+Output
+72
+514
+
+*/

@@ -1,0 +1,19 @@
+class Bar3D
+{
+ private:
+  int width;
+  int height;
+  int depth;
+  
+  public:
+  Bar3D(int w, int h, int d)
+  {
+    width = w;
+    height = h;
+    depth = d;
+  }
+  int getSurface()
+  {
+    return (2*depth*width) + (2*depth*height) + (2*depth*width);
+  }
+};

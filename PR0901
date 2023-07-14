@@ -1,0 +1,17 @@
+int maxElementIndex(int *array, int n)
+{
+    int i, max = 0;
+    int location;
+
+    //loops runs n times to fine the largest
+    for (i=0; i<n; i++)
+    {
+        // if to determine the largest and its location
+        if(*(array+i) >= max)
+        {
+            max = *(array+i);
+            location = i;
+        }
+    }
+    return location;
+}

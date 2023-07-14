@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int a=0,b=0,count;
+    char al,bo;
+
+    for (count=0; count<5; count++)
+    {
+        scanf(" %c%c", &al, &bo);
+        if ((al=='P' && bo=='R') || (al=='R' && bo=='S') || (al=='S' && bo=='P'))
+            a=a+1;
+        else if ((al=='R' && bo=='P') || (al=='S' && bo=='R') || (al=='P' && bo=='S'))
+            b=b+1;
+    }
+
+    if (a>b)
+    {
+        printf("Alice");
+    } else if (b>a)
+    {
+        printf("Bob");
+    }else
+    {
+        printf("Draw");
+    }
+
+
+    return 0;
+}

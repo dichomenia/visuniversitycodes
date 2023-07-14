@@ -1,0 +1,172 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+struct Airlines
+{
+    string block[1000];
+};
+
+
+int main()
+{
+    //cout << "Hello world!" << endl;
+
+    int cases;
+    cin >> cases;
+
+    while(cases--)
+{
+
+
+
+    Airlines air1, air2;
+    int a,b, i = 0;
+    char start, stop;
+
+    cin >> a;
+    while (a--)  //takes in the start and end puts them in air1 object array
+    {
+        cin >> start >> stop;
+        air1.block[i] += start;
+        air1.block[i] += stop;
+        i++;
+    }
+
+    for (int j = 0; j < i; j++)     //checking for duplicate and erase
+    {
+        for (int k = 0; k < air1.block[j].length(); k++)
+        {
+            for (int l = 1; l < i; l++)
+            {
+                if (j == l)
+                    continue;
+                for (int m = 0; m < air1.block[l].length(); m++)
+                {
+                    if (air1.block[j][k] == air1.block[l][m])
+                    {
+                        air1.block[j] += air1.block[l];
+                        air1.block[l].erase();
+                    }
+                }
+            }
+        }
+    }
+
+    for (int j = 0; j < i; j++) //to erase the letter that occurred twice or more
+    {
+        for (int k = 0; k < air1.block[j].length(); k++)
+        {
+            for (int l = 1; l < air1.block[j].length(); l++)
+            {
+                if (k == l)
+                    continue;
+                else if (air1.block[j][k] == air1.block[j][l])
+                {
+                    air1.block[j].erase(air1.block[j].begin() + l);
+                    l--;
+                }
+            }
+        }
+    }
+
+    for (int j = 0; j < i; j++) //sorts the array
+    {
+        for (int k = 0; k < air1.block[j].length(); k++)
+        {
+            for (int l = 1; l < air1.block[j].length(); l++)
+            {
+                if (air1.block[j][l-1] > air1.block[j][l])
+                {
+                    char tmp;
+                    tmp = air1.block[j][l-1];
+                    air1.block[j][l-1] = air1.block[j][l];
+                    air1.block[j][l] = tmp;
+                }
+            }
+        }
+    }
+
+    i = 0;
+    cin >> b;
+    while (b--)
+    {
+        cin >> start >> stop;
+        air2.block[i] += start;
+        air2.block[i] += stop;
+        i++;
+    }
+    for (int j = 0; j < i; j++)
+    {
+        for (int k = 0; k < air2.block[j].length(); k++)
+        {
+            for (int l = 1; l < i; l++)
+            {
+                if (j == l)
+                    continue;
+                for (int m = 0; m < air2.block[l].length(); m++)
+                {
+                    if (air2.block[j][k] == air2.block[l][m])
+                    {
+                        air2.block[j] += air2.block[l];
+                        air2.block[l].erase();
+                    }
+                }
+            }
+        }
+    }
+    for (int j = 0; j < i; j++)
+    {
+        for (int k = 0; k < air2.block[j].length(); k++)
+        {
+            for (int l = 1; l < air2.block[j].length(); l++)
+            {
+                if (k == l)
+                    continue;
+                else if (air2.block[j][k] == air2.block[j][l])
+                {
+                    air2.block[j].erase(air2.block[j].begin() + l);
+                    l--;
+                }
+            }
+        }
+    }
+
+    for (int j = 0; j < i; j++)
+    {
+        for (int k = 0; k < air2.block[j].length(); k++)
+        {
+            for (int l = 1; l < air2.block[j].length(); l++)
+            {
+                if (air2.block[j][l-1] > air2.block[j][l])
+                {
+                    char temp;
+                    temp = air2.block[j][l-1];
+                    air2.block[j][l-1] = air2.block[j][l];
+                    air2.block[j][l] = temp;
+                }
+            }
+        }
+    }
+
+    int flag = 1;
+    for (int j = 0; j < 50; j++)
+    {
+        for (int k = 0; k < max(air1.block[j].length(), air2.block[j].length()); k++)
+        {
+            if (air1.block[j] != air2.block[j])
+                flag = 0;
+        }
+    }
+    if (flag == 0)
+        cout << "NO" << endl;
+    else
+        cout << "YES" << endl;
+    cout << endl;
+
+}
+
+    return 0;
+}

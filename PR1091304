@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+    char sentence[100], result[100];
+    int len, i, index=0, start, end;
+
+    gets(sentence);
+
+    len = strlen(sentence);
+
+    // Start checking of words from the end of string
+    start = len - 1;
+    end = len - 1;
+
+    while(start > 0)
+    {
+        // If a word is found
+        if(sentence[start] == ' ')
+        {
+            // Add the word to the result string
+            i = start + 1;
+            while(i <= end)
+            {
+                result[index] = sentence[i];
+                i++;
+                index++;
+            }
+            result[index++] = ' ';
+            end = start - 1;
+        }
+        start--;
+    }
+
+    //handling adding the last word
+    for(i=0; i<=end; i++)
+    {
+        result[index] = sentence[i];
+        index++;
+    }
+
+    printf("%s", result);
+
+    return 0;
+}
+/*
+Test case
+How are you
+
+I have an apple
+
+
+Output
+you are How
+
+apple an have I
+
+*/

@@ -1,0 +1,49 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+using namespace std;
+
+int main()
+{
+    char test[10000], test2[10000];
+    int string_length;
+    int i,j,k=0, isPalindrome = 1;
+
+    cin >> test;
+    string_length = strlen(test);
+
+    // storing character array in reverse
+    for(j= string_length - 1; j >= 0; j--)
+    {
+        test2[j]=test[k];
+        k++;
+    }
+    for (i=0; i<string_length; i++)   //loop to test for palindrome
+    {
+        if ( (test[i] == test2[i]) || (test[i] == (test2[i] - 32)) || (test[i] == (test2[i] + 32)) ) //testing if lower case equal upper case and vise versa
+        {
+            /*printf("%s is a palindrome.", test);
+            break;*/
+        }
+        else
+        {
+            printf("%s is not a palindrome.", test);
+            isPalindrome = 0;
+            break;
+        }
+    }
+    if (isPalindrome)
+        printf("%s is a palindrome.", test);
+    return 0;
+}
+
+/*
+Test case
+AbcBa
+AAaab
+Output
+AbcBa is a palindrome.
+AAaab is not a palindrome.
+*/

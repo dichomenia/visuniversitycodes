@@ -1,0 +1,202 @@
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 20;
+int final_path[N+1];
+bool visited[N];
+double final_ans = INT_MAX;
+
+struct coordinates
+{
+    int x,y;
+};
+
+double firstMin(double table[N][N], int i)
+{
+	double min = INT_MAX;
+	for (int k=0; k<N; k++)
+		if (table[i][k]<min && i != k)
+			min = table[i][k];
+	return min;
+}
+
+double secondMin(double table[N][N], int i)
+{
+	double first = INT_MAX, second = INT_MAX;
+	for (int j=0; j<N; j++)
+	{
+		if (i == j)
+			continue;
+
+		if (table[i][j] <= first)
+		{
+			second = first;
+			first = table[i][j];
+		}
+		else if (table[i][j] <= second && table[i][j] != first)
+        {
+            second = table[i][j];
+        }
+	}
+	return second;
+}
+
+void TSPRec(double table[N][N], double curr_bound, double curr_weight, int level, int curr_path[])
+{
+	if (level==N)
+	{
+		if (table[curr_path[level-1]][curr_path[0]] != 0)
+		{
+			double curr_res = curr_weight + table[curr_path[level-1]][curr_path[0]];
+			if (curr_res < final_ans)
+			{
+				final_ans = curr_res;
+			}
+		}
+		return;
+	}
+	for (int i=0; i<N; i++)
+	{
+		if (table[curr_path[level-1]][i] != 0 && visited[i] == false)
+		{
+			double temp = curr_bound;
+			curr_weight += table[curr_path[level-1]][i];
+
+			if (level==1)
+            {
+                curr_bound -= ((firstMin(table, curr_path[level-1]) + firstMin(table, i))/2);
+
+            }
+			else
+            {
+                curr_bound -= ((secondMin(table, curr_path[level-1]) + firstMin(table, i))/2);
+
+            }
+			if (curr_bound + curr_weight < final_ans)
+			{
+				curr_path[level] = i;
+				visited[i] = true;
+
+				TSPRec(table, curr_bound, curr_weight, level+1,curr_path);
+			}
+
+			curr_weight -= table[curr_path[level-1]][i];
+			curr_bound = temp;
+
+			memset(visited, false, sizeof(visited));
+			for (int j=0; j<=level-1; j++)
+            {
+                visited[curr_path[j]] = true;
+            }
+		}
+	}
+}
+
+void TSP(double table[N][N])
+{
+	int curr_path[N+1];
+
+	int curr_bound = 0;
+	memset(curr_path, -1, sizeof(curr_path));
+	memset(visited, 0, sizeof(visited));
+
+	for (int i=0; i<N; i++)
+    {
+        curr_bound += (firstMin(table, i) + secondMin(table, i));
+    }
+
+	curr_bound = (curr_bound&1)? curr_bound/2 + 1 : curr_bound/2;
+
+	visited[0] = true;
+	curr_path[0] = 0;
+
+	TSPRec(table, curr_bound, 0, 1, curr_path);
+}
+
+///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+double dist(int x1, int y1, int x2, int y2)
+{
+    return sqrt( ((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
+}
+
+///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+int main()
+{
+
+	///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	coordinates Coordinate[N];
+
+    int n, x, y;
+
+    for (int i = 0; i < N; i++)
+    {
+        cin >> n >> x >> y;
+        Coordinate[i].x = x;
+        Coordinate[i].y = y;
+    }
+
+    double table[N][N] = {0};
+
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            if (i == j)
+            {
+                 table[i][j] = 0;
+            }
+            else
+            {
+                table[i][j] = dist(Coordinate[i].x, Coordinate[i].y, Coordinate[j].x, Coordinate[j].y);
+            }
+        }
+    }
+
+    /*for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+               //cout << table[i][j] << "        ";
+        }
+        //cout << endl;
+    }*/
+
+	///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	TSP(table);
+
+	printf("%.3lf\n", final_ans);
+
+	return 0;
+}
+
+/*
+1 37 52
+2 49 49
+3 52 64
+4 20 26
+5 40 30
+6 21 47
+7 17 63
+8 31 62
+9 52 33
+10 51 21
+11 42 41
+12 31 32
+13 5 25
+14 12 42
+15 36 16
+16 52 41
+17 27 23
+18 17 33
+19 13 13
+20 57 58
+*/

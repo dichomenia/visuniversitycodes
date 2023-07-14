@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int matrix[100][100], row, columns, amount;
+    int i, j;
+    int zero = 0;
+    int nrow, ncolumns, num;
+
+    //taking the rows column and numbers you want to change
+    scanf("%d", &row);
+    scanf("%d", &columns);
+    scanf("%d", &amount);
+
+    //creating sparse matrix
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < columns; j++)
+        {
+            matrix[i][j] = zero;
+        }
+    }
+
+    //loop reading where to enter the new number
+    for (i = 0; i < amount; i++)
+    {
+        //reading row
+        scanf("%d", &nrow);
+        //reading column
+        scanf("%d", &ncolumns);
+        //reading new number
+        scanf("%d", &num);
+
+        //assigning the new number in the position
+        matrix[nrow][ncolumns] = num;
+    }
+
+    //printing matrix
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < columns; j++)
+        {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+
+    return 0;
+}

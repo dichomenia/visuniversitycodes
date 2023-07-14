@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main()
+{
+    int secret[4], oppo[4], bulls = 0, cows = 0;
+
+    for (int i = 0; i < 4; i++)
+    {
+        scanf("%1d", &secret[i]);
+    }
+    for (int i = 0; i < 4; i++)
+    {
+        scanf("%1d", &oppo[i]);
+    }
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (secret[i] == oppo[i])
+            bulls++;
+        else
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (secret[i] == oppo[j])
+                    cows++;
+            }
+        }
+    }
+    printf("%d %d", bulls, cows);
+}

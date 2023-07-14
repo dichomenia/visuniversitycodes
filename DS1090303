@@ -1,0 +1,108 @@
+#include <iostream>
+#include <string>
+
+#define SIZE 100
+
+///WEEK 3 QUESTION 3
+
+using namespace std;
+
+class Node
+{
+    public:
+	int data;
+	Node *next;
+};
+
+class Queue
+{
+public:
+	Queue()
+	{
+		top = NULL;
+		bot = NULL;
+	}
+	int enqueue(int dat)
+	{
+	    Node *point = new Node();
+
+	    point -> data = dat;
+        if (bot == NULL)
+        {
+            top = point;
+            bot = point;
+        }
+        else
+        {
+            top -> next = point;
+            top = point;
+        }
+        return 1;
+	}
+
+	int *dequeue()
+	{
+	    if (top == NULL && bot == NULL)
+        {
+            return NULL;
+        }
+        else if (top == bot)
+        {
+            int *temp = new int;
+            *temp = bot -> data;
+            bot = top = NULL;
+            return temp;
+        }
+        else
+        {
+            int *temp = new int;
+
+            *temp = bot-> data;
+            bot = bot->next;
+            return temp;
+        }
+
+	}
+private:
+	Node *top, *bot;
+};
+
+int main()
+{
+	int data, *temp;
+	string command;
+	Queue *queue = new Queue();
+	while(1)
+	{
+		cin>>command;
+		if(command.compare("exit") == 0)
+		{
+			break;
+		}
+		else if(command.compare("enqueue") == 0)
+		{
+			cout<<"Please input a integer data:";
+			cin>>data;
+			if(queue->enqueue(data) == 1)
+			{
+				cout<<"Successfully enqueue data "<<data<<" into queue."<<endl;
+			}
+			else
+			{
+				cout<<"Failed to enqueue data into queue."<<endl;
+			}
+		}
+		else if(command.compare("dequeue") == 0)
+		{
+			temp = queue->dequeue();
+			if(temp == NULL)
+			{
+				cout<<"Failed to dequeue a data from queue.\n";
+			}
+			else
+			{
+				cout<<"Dequeue data "<<*temp<<" from queue."<<endl;
+			}
+		}
+	}
+}

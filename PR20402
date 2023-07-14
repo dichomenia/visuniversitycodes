@@ -1,0 +1,41 @@
+Segment(Point _a, Point _b)
+{
+    a = _a;
+    b = _b;
+}
+  Point *getIntersection(Segment s) // 計算與另一條線的交點，如果只有一個交點就回傳該交點，其他狀況則回傳NULL
+{
+    float slope_1, slope_2, c1, c2;
+    //Calculating slopes for both lines
+    slope_1 = (b.y - a.y) / (b.x - a.x);
+    slope_2 = ((s.getPointB().y-s.getPointA().y)/(s.getPointB().x-s.getPointA().x));
+
+    if (slope_1-slope_2 == 0)
+    {
+        return NULL;
+    }
+    else
+    {
+    Point *f=new Point();
+	
+    c1 = a.y-slope_1*a.x;              // finding the c in y = mx+c
+    c2 = s.getPointA().y-slope_2*s.getPointA().x;
+
+    f->x = (c2-c1)/(slope_1-slope_2);   //X intercept
+    f->y = slope_1*f->x+c1;             //Y intercept
+
+    //Checking if X intercept and Y intercept is in between the two line points
+    if ( (f->x >= a.x && f->x <= b.x) && (f->y >= a.y && f->y <= b.y) && (f->x >= s.getPointA().x && f->x <= s.getPointB().x) && (f->y >= s.getPointA().y && (f->y <= s.getPointB().y)))
+    {
+        return f;
+    }
+    else
+    {
+        return NULL;
+    }
+    }
+}
+  float length()
+{
+    return sqrt((b.x-a.x)*(b.x-a.x)+(b.y-a.y)*(b.y-a.y));
+}

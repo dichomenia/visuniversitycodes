@@ -1,0 +1,28 @@
+class Bar3D
+{
+  private:
+  int width;
+  int height;
+  int depth;
+  
+  public:
+  static int count;    
+      
+  Bar3D(int w, int h, int d)
+  {
+    width = w;
+    height = h;
+    depth = d;
+    count++;
+  }
+  
+  ~Bar3D()
+   {
+       count--;
+   }
+  
+  int getVolume()
+  {
+    return (depth*width*height);
+  }
+};

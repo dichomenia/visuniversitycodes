@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int rows, num = 1, i, j;
+
+    scanf("%d",&rows);
+
+    for(i=0; i<rows; i++)            // outer loop to display rows
+    {
+
+        for(j=0; j <= i; j++)     // inner loop to display the pascal triangle numbers
+        {
+            if (j==0 || i==0)     // to print 1 at the start
+                num = 1;
+            else
+                num = num*(i-j+1)/j;  //calculate the number printed
+
+            printf("%d ", num);
+        }
+        printf("\n");
+    }
+    return 0;
+}

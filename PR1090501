@@ -1,0 +1,19 @@
+#include <iostream>
+
+using namespace std;
+
+
+int main()
+{
+    int num, total= 0;
+
+    cin >> num;
+
+    while (num != 0)
+    {
+        total = total + num;
+        cin >> num;
+    }
+    cout << total;
+    return 0;
+}

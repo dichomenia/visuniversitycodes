@@ -1,0 +1,38 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+
+using namespace std;
+
+int main()
+{
+    int distance=0, height,slide, day = 0, climb;
+
+    cin >> height >> climb >> slide;
+
+    if (climb <= slide && climb < height) //check if it moved
+        printf("-1");
+    else
+    {
+        while (distance != height)
+        {
+            distance = distance + climb;
+            day = day + 1;
+
+            if (distance >= height)
+            {
+                cout << day;
+                break;
+            }
+            else
+            {
+                distance = distance - slide;
+            }
+        }
+    }
+    return 0;
+}
+///Test case
+///10 4 3
+///Output
+///7

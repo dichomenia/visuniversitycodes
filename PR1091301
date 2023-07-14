@@ -1,0 +1,11 @@
+char *mystrcat(char *dest, char *src)
+{
+  strcat(dest,src);
+  return dest;
+}
+
+char *mystrncat(char *dest, char *src, int n)
+{
+  strncat(dest, src, n);
+  return dest;
+}
